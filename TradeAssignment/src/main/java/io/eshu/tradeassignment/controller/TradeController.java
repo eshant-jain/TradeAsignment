@@ -133,7 +133,6 @@ public class TradeController {
 
 	private boolean maturityCheck(String maturityDate) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-		// String formattedDate = LocalDateTime.now().format(formatter);
 		String format = LocalDateTime.now().format(formatter);
 		boolean validMaturity = LocalDate.parse(format, formatter).isBefore(LocalDate.parse(maturityDate, formatter));
 		return validMaturity;
@@ -148,11 +147,13 @@ public class TradeController {
 	@GetMapping("/refreshFlags")
 	public String refreshFlags() {
 		// toDo
-		return "Trade saved with id ";
+		List<Trade> allTrades = (List<Trade>) repository.findAll();
+		allTrades.stream().filter(t -> !maturityCheck(t.getMaturityDate())).forEach(t -> {
+			t.setExpired('Y');
+			repository.save(t);
+		});
+		
+		return "Expired flag auto update complete !!!";
 	}
-
-	// ToDo
-	// add a logic to check file upload and return stats also skip the invalid
-	// result and add it in list
 
 }
