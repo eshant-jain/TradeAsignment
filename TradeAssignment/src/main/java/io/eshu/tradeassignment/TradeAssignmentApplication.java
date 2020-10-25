@@ -18,7 +18,7 @@ public class TradeAssignmentApplication {
 	@Bean
 	  public CommandLineRunner init(TradeRepository repository) {
 	    return (args) -> {
-	      repository.save(new Trade("T1", 1, "CP-1", "B1", "20/05/2020", "13/06/2020", 'N'));
+	      repository.save(new Trade("T1", 1, "CP-1", "B1", "20/07/2020", "13/06/2020", 'N'));
 	      repository.save(new Trade("T2", 2, "CP-2", "B1", "20/05/2021", "13/06/2020", 'N'));
 	    };
 	}
